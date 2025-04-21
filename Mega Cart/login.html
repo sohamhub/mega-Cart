@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login - Mega Cart</title>
+</head>
+<body style="background-color: lightgreen; font-family: Arial;">
+  <h2 style="text-align: center;">The Mega Cart</h2>
+  <div style="text-align: center;">
+    <label>Username:</label>
+    <input type="text" id="username"><br><br>
+    <label>Password:</label>
+    <input type="password" id="password"><br><br>
+    <button id="loginBtn">Login</button><br><br>
+    <a href="sign-up.html">New user? Sign up here</a>
+  </div>
+
+  <script>
+    document.getElementById("loginBtn").addEventListener("click", function () {
+      const enteredUser = document.getElementById("username").value.trim();
+      const enteredPass = document.getElementById("password").value;
+
+      if (!enteredUser || !enteredPass) {
+        alert("Both fields are mandatory");
+        return;
+      }
+
+      const storedData = JSON.parse(localStorage.getItem("user"));
+
+      if (storedData && enteredUser === storedData.username && enteredPass === storedData.password) {
+        localStorage.setItem("loggedInUser", enteredUser);
+        window.location.href = "main.html";
+      } else {
+        alert("Enter valid credentials or sign up.");
+      }
+    });
+  </script>
+</body>
+</html>

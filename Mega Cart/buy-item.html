@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart - Mega Cart</title>
+</head>
+<body style="background-color: lightgreen; font-family: Arial;">
+  <div style="display: flex; justify-content: space-between;">
+    <a href="#" id="logoutLink">Logout</a>
+    <div id="date"></div>
+  </div>
+
+  <h2 style="text-align: center;">Your Cart Items</h2>
+  <ul id="cartList" style="max-width: 600px; margin: auto;"></ul>
+  <h3 style="text-align: center;" id="totalCost"></h3>
+
+  <script>
+    document.getElementById("logoutLink").addEventListener("click", () => {
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = "login.html";
+    });
+
+    const date = new Date();
+    document.getElementById("date").textContent = date.toDateString();
+
+    const cartItems = JSON.parse(localStorage.getItem("items")) || [];
+    const cartList = document.getElementById("cartList");
+    let total = 0;
+
+    cartItems.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <img src="${item.img}" width="100">
+        <strong>${item.name}</strong> - ₹${item.cost} - Delivery in ${item.delivery}
+      `;
+      cartList.appendChild(li);
+      total += parseFloat(item.cost);
+    });
+
+    document.getElementById("totalCost").textContent = `Total Cost: ₹${Math.round(total)}`;
+  </script>
+</body>
+</html>

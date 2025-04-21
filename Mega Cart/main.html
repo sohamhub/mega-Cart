@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Main - Mega Cart</title>
+</head>
+<body style="background-color: lightgreen; font-family: Arial;">
+  <div style="display: flex; justify-content: space-between;">
+    <a href="#" id="logoutLink">Logout</a>
+    <div id="date"></div>
+  </div>
+
+  <h2 style="text-align: center;" id="welcomeText"></h2>
+  <h4 style="text-align: center;">Please Click on an item to add it to the cart</h4>
+
+  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 700px; margin: auto;">
+    <div>
+      <img src="images/clothing.jpg" width="200" style="cursor:pointer;" id="clothing">
+      <p>Clothing</p>
+    </div>
+    <div>
+      <img src="images/footwear.jpg" width="200" style="cursor:pointer;" id="beauty">
+      <p>Foot-wear</p>
+    </div>
+    <div>
+      <img src="images/footwear.jpg" width="200" style="cursor:pointer;" id="footwear">
+      <p>Footwear</p>
+    </div>
+    <div>
+      <img src="images/school.jpg" width="200" style="cursor:pointer;" id="bags">
+      <p>School Bags</p>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button onclick="window.location.href='buy-item.html'">Click Here to View Cart</button>
+  </div>
+
+  <script>
+    const username = localStorage.getItem("loggedInUser");
+    document.getElementById("welcomeText").textContent = `Dear, ${username}! Welcome to Mega Cart ...`;
+
+    const date = new Date();
+    const formattedDate = date.toDateString();
+    document.getElementById("date").textContent = formattedDate;
+
+    document.getElementById("logoutLink").addEventListener("click", () => {
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = "login.html";
+    });
+
+    const cartItems = JSON.parse(localStorage.getItem("items")) || [];
+
+    function addToCart(name, img, cost, delivery) {
+      alert(`${name} added to cart!`);
+      cartItems.push({ name, img, cost, delivery });
+      localStorage.setItem("items", JSON.stringify(cartItems));
+    }
+
+    document.getElementById("clothing").addEventListener("click", () => addToCart("Clothing", "clothing.jpg", 499.99, "2 Days"));
+    document.getElementById("beauty").addEventListener("click", () => addToCart("Beauty & Health", "beauty.jpg", 299.49, "3 Days"));
+    document.getElementById("footwear").addEventListener("click", () => addToCart("Footwear", "footwear.jpg", 699.95, "4 Days"));
+    document.getElementById("bags").addEventListener("click", () => addToCart("School Bags", "bags.jpg", 899.75, "5 Days"));
+  </script>
+</body>
+</html>

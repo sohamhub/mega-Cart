@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up - Mega Cart</title>
+</head>
+<body style="background-color: lightgreen; font-family: Arial;">
+  <h2 style="text-align: center;">The Mega Cart</h2>
+  <div style="text-align: center;">
+    <label>Enter username:</label>
+    <input type="text" id="username"><br><br>
+    <label>Enter Email Id:</label>
+    <input type="text" id="email"><br><br>
+    <label>Enter Mobile:</label>
+    <input type="text" id="mobile"><br><br>
+    <label>Enter Password:</label>
+    <input type="password" id="password"><br><br>
+    <label>Confirm Password:</label>
+    <input type="password" id="confirmPassword"><br><br>
+    <button id="signupBtn">SignUp</button>
+  </div>
+
+  <script>
+    document.getElementById("signupBtn").addEventListener("click", function () {
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\W_]).{6,}$/;
+
+      if (username.length < 6 || username.length > 10) {
+        alert("Username must be between 6 and 10 characters.");
+      } else if (!emailRegex.test(email)) {
+        alert("Enter valid email.");
+      } else if (!/^\d{10}$/.test(mobile)) {
+        alert("Mobile must be exactly 10 digits.");
+      } else if (!passwordRegex.test(password)) {
+        alert("Password must contain letters, digits, and special characters.");
+      } else if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+      } else {
+        const userData = {
+          username,
+          password
+        };
+        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("loggedInUser", username);
+        window.location.href = "main.html";
+      }
+    });
+  </script>
+</body>
+</html>
